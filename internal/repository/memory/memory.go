@@ -38,22 +38,6 @@ func (r *InMemoryRepository) Add(t domain.Task) (int, error) {
 	return id, nil
 }
 
-func (r *InMemoryRepository) Get(id int) (domain.Task, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-
-	if id <= 0 {
-		return domain.Task{}, ErrInvalidID
-	}
-
-	task, exists := r.tasks[id]
-	if !exists {
-		return domain.Task{}, ErrTaskNotFound
-	}
-
-	return task, nil
-}
-
 func (r *InMemoryRepository) List(filters domain.TaskFilters) ([]domain.Task, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -70,18 +54,6 @@ func (r *InMemoryRepository) List(filters domain.TaskFilters) ([]domain.Task, er
 	return result, nil
 }
 
-func (r *InMemoryRepository) matchesFilters(task domain.Task, filters domain.TaskFilters) bool {
-	if filters.Status != "" && task.Status != filters.Status {
-		return false
-	}
-
-	if filters.Priority != "" && task.Priority != filters.Priority {
-		return false
-	}
-
-	return true
-}
-
 func (r *InMemoryRepository) Update(id int, t domain.Task) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -94,9 +66,29 @@ func (r *InMemoryRepository) Update(id int, t domain.Task) error {
 		return ErrTaskNotFound
 	}
 
-	t.ID = id
-	r.tasks[id] = t
+	task := r.tasks[id]
+	var doUpdate bool
 
+	if t.Content != "" && t.Content != task.Content {
+		task.Content = t.Content
+		doUpdate = true
+	}
+
+	if t.Status != "" && t.Status != task.Status {
+		task.Status = t.Status
+		doUpdate = true
+	}
+
+	if t.Priority != "" && t.Priority != task.Priority {
+		task.Priority = t.Priority
+		doUpdate = true
+	}
+
+	if !doUpdate {
+		return nil
+	}
+
+	r.tasks[id] = task
 	return nil
 }
 
@@ -114,4 +106,16 @@ func (r *InMemoryRepository) Delete(id int) error {
 
 	delete(r.tasks, id)
 	return nil
+}
+
+func (r *InMemoryRepository) matchesFilters(task domain.Task, filters domain.TaskFilters) bool {
+	if filters.Status != "" && task.Status != filters.Status {
+		return false
+	}
+
+	if filters.Priority != "" && task.Priority != filters.Priority {
+		return false
+	}
+
+	return true
 }

@@ -7,9 +7,8 @@ import (
 
 type Service interface {
 	Add(content, priority string) (int, error)
-	Get(id int) (domain.Task, error)
+	Done(id int) error
 	List(name, priority, status string) ([]domain.Task, error)
-	Update(id int, t domain.Task) error
 	Delete(id int) error
 }
 
@@ -22,16 +21,17 @@ func (s *service) Add(content, priority string) (int, error) {
 	return 0, nil
 }
 
-func (s *service) Get(id int) (domain.Task, error) {
-	return s.repo.Get(id)
+func (s *service) Done(id int) error {
+	return s.repo.Update(
+		id,
+		domain.Task{
+			Status: domain.DoneTaskStatus,
+		},
+	)
 }
 
 func (s *service) List(name, priority, status string) ([]domain.Task, error) {
 	return nil, nil
-}
-
-func (s *service) Update(id int, task domain.Task) error {
-	return nil
 }
 
 func (s *service) Delete(id int) error {
