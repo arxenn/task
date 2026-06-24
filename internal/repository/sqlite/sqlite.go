@@ -10,7 +10,9 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-var ()
+const (
+	SQLiteTimeFormat = "2006-01-02 15:04:05"
+)
 
 type SQLiteRepository struct {
 	db *sql.DB
@@ -47,8 +49,8 @@ func createTable(db *sql.DB) error {
 		content TEXT NOT NULL,
 		status TEXT NOT NULL,
 		priority TEXT NOT NULL,
-		created_at TIMESTAMP NOT NULL,
-		done_at TIMESTAMP NULL
+		created_at DATETIME NOT NULL,
+		done_at DATETIME NULL
 	);
 	`
 	_, err := db.Exec(query)
@@ -57,7 +59,7 @@ func createTable(db *sql.DB) error {
 
 func (r *SQLiteRepository) Add(t domain.Task) (int, error) {
 	query := `INSERT INTO tasks (content, status, priority, created_at) VALUES (?, ?, ?, ?)`
-	result, err := r.db.Exec(query, t.Content, t.Status, t.Priority, t.CreatedAt)
+	result, err := r.db.Exec(query, t.Content, t.Status, t.Priority, t.CreatedAt.Format(SQLiteTimeFormat))
 	if err != nil {
 		return 0, fmt.Errorf("failed to insert task: %w", err)
 	}
@@ -136,7 +138,7 @@ func (r *SQLiteRepository) Update(id int, t domain.Task) error {
 		args = append(args, t.Status)
 		if t.Status == domain.DoneTaskStatus {
 			updates = append(updates, "done_at = ?")
-			args = append(args, time.Now())
+			args = append(args, time.Now().Format(SQLiteTimeFormat))
 		}
 	}
 
