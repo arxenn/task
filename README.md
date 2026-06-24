@@ -13,8 +13,8 @@ go install github.com/arxenn/task@latest
 Or build from source:
 
 ```bash
-git clone https://github.com/arxenn/tasks.git
-cd tasks
+git clone https://github.com/arxenn/task.git
+cd task
 go build -o task .
 ```
 
@@ -76,9 +76,9 @@ If no priority is given, tasks default to `medium`.
 
 Tasks are stored in a SQLite database under your OS application data directory:
 
-- **Linux:** `~/.local/share/tasks/`
-- **macOS:** `~/Library/Application Support/tasks/`
-- **Windows:** `%APPDATA%\tasks\`
+- **Linux:** `~/.local/share/task/`
+- **macOS:** `~/Library/Application Support/task/`
+- **Windows:** `%APPDATA%\task\`
 
 ## License
 
