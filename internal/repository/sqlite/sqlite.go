@@ -84,6 +84,9 @@ func (r *SQLiteRepository) List(filters domain.TaskFilters) ([]domain.Task, erro
 	if filters.Done {
 		query += " AND status = ?"
 		args = append(args, domain.DoneTaskStatus)
+	} else {
+		query += " AND status = ?"
+		args = append(args, domain.TodoTaskStatus)
 	}
 
 	rows, err := r.db.Query(query, args...)
