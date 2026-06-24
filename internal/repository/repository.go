@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/arxenn/tasks/internal/domain"
+import "github.com/arxenn/task/internal/domain"
 
 type Repository interface {
 	Add(t domain.Task) (int, error)

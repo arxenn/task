@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/arxenn/tasks/internal/domain"
+	"github.com/arxenn/task/internal/domain"
 	_ "modernc.org/sqlite"
 )
 
@@ -17,7 +17,7 @@ type SQLiteRepository struct {
 }
 
 func NewSQLiteRepository() (*SQLiteRepository, error) {
-	appName := "tasks"
+	appName := "task"
 	appDataDir, err := getAppDataDir(appName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get app data dir: %w", err)

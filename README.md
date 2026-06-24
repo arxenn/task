@@ -7,7 +7,7 @@ The core idea is based on [todo-manager](https://github.com/pykeras/BashUtils#to
 ## Installation
 
 ```bash
-go install github.com/arxenn/tasks@latest
+go install github.com/arxenn/task@latest
 ```
 
 Or build from source:

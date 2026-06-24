@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/arxenn/tasks/cmd"
+	"github.com/arxenn/task/cmd"
 )
 
 // TODO LIST:

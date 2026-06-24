@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	repository "github.com/arxenn/tasks/internal/repository/sqlite"
-	"github.com/arxenn/tasks/internal/service"
+	repository "github.com/arxenn/task/internal/repository/sqlite"
+	"github.com/arxenn/task/internal/service"
 	"github.com/spf13/cobra"
 )
 

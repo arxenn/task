@@ -1,4 +1,4 @@
-module github.com/arxenn/tasks
+module github.com/arxenn/task
 
 go 1.25.0
 

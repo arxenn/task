@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/arxenn/tasks/internal/domain"
-	repository "github.com/arxenn/tasks/internal/repository/sqlite"
-	"github.com/arxenn/tasks/internal/service"
+	"github.com/arxenn/task/internal/domain"
+	repository "github.com/arxenn/task/internal/repository/sqlite"
+	"github.com/arxenn/task/internal/service"
 	"github.com/spf13/cobra"
 )
 

@@ -5,8 +5,8 @@ import (
 	"slices"
 	"time"
 
-	"github.com/arxenn/tasks/internal/domain"
-	"github.com/arxenn/tasks/internal/repository"
+	"github.com/arxenn/task/internal/domain"
+	"github.com/arxenn/task/internal/repository"
 )
 
 type Service interface {
